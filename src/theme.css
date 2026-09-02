@@ -1,0 +1,35 @@
+/* American Cedar & Millwork brand — CSS variables.
+   Same values as theme.js (COLORS / FONT_FAMILIES). Import once per site:
+     import 'acm-shared/theme.css';
+   Canonical names first; the legacy aliases the customer website grew up
+   with (--forest, --cedar, --moss …) are kept so nothing breaks while pages
+   migrate to the canonical names. */
+
+:root {
+  /* canonical */
+  --navy: #212b67;          /* primary */
+  --navy-pressed: #1a2252;
+  --red: #ce2029;           /* accent / actions */
+  --paper: #f5f6fa;         /* page background */
+  --white: #ffffff;         /* cards */
+  --ink: #1d2452;           /* body text */
+  --muted: #7a7f99;         /* secondary text */
+  --line: #e1e4ef;          /* borders */
+  --selected: #eef0f9;      /* selected row tint */
+  --on-navy: #ffffff;
+  --on-navy-muted: #c7cdea;
+  --danger: #ce2029;
+  --demo-bg: #fff7e0;
+  --demo-border: #e6d9a8;
+  --demo-text: #7a6520;
+
+  --font-display: Georgia, 'Times New Roman', serif;
+  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* legacy aliases (customer website) */
+  --forest: var(--navy);
+  --forest-deep: var(--navy-pressed);
+  --cedar: var(--red);
+  --moss: var(--muted);
+}
