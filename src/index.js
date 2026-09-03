@@ -16,3 +16,4 @@ export { unitPricing } from './pricing.js';
 export { reorderableLines, addDetailsToCart } from './reorder.js';
 export { money, shortDate } from './format.js';
 export { SummaryType, DetailType, agingAmount } from './bistrack.js';
+export { buildGroupedCatalog } from './catalog.js';

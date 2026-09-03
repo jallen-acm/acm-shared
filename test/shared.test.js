@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   COLORS, can, isEmployeeSession, OrderStatus, friendlyStatus, transactionTotal,
-  buildTrackerSteps, unitPricing, money, agingAmount, isActiveOrder,
+  buildTrackerSteps, unitPricing, money, agingAmount, isActiveOrder, buildGroupedCatalog,
 } from '../src/index.js';
 
 test('brand colors are the logo values', () => {
@@ -55,4 +55,23 @@ test('formatting and aging field', () => {
   assert.equal(money(null), '—');
   assert.equal(agingAmount({ ValueOfTransactions: 12 }), 12);
   assert.equal(agingAmount({ Balance: 7 }), 7);
+});
+
+test('buildGroupedCatalog nests products under group and section', () => {
+  const groups = [
+    { ProductGroupID: 1, ParentID: null, TreeLevel: 1, TreeSequence: 2, Name: 'Lumber' },
+    { ProductGroupID: 2, ParentID: 1, TreeLevel: 2, TreeSequence: 1, Name: 'Cedar' },
+    { ProductGroupID: 3, ParentID: 2, TreeLevel: 3, TreeSequence: 1, Name: 'Decking' },
+    { ProductGroupID: 9, ParentID: null, TreeLevel: 1, TreeSequence: 1, Name: 'Fasteners' },
+  ];
+  const products = [
+    { ProductId: 10, BisTrackProductGroupId: 3 },
+    { ProductId: 11, BisTrackProductGroupId: 9 },
+    { ProductId: 12, BisTrackProductGroupId: 999 },
+  ];
+  const g = buildGroupedCatalog(products, groups);
+  assert.deepEqual(g.map((x) => x.group.Name), ['Fasteners', 'Lumber', 'More Products']);
+  assert.equal(g[1].sections[0].section.Name, 'Cedar');
+  assert.equal(g[1].sections[0].products[0].ProductId, 10);
+  assert.equal(g[0].sections[0].section.Name, 'Other');
 });
